@@ -1,0 +1,877 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>API</title>
+    
+    <script src="js/jquery-2.1.3.min.js"></script>
+    <script src="js/inline-0.9.3.js"></script>
+    
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.css"/>
+
+</head>
+
+<body ng-app="app">
+
+<style>
+.box {
+    border: 1px solid #ccc;
+    padding: 20px;
+    padding-top: 0px;
+    margin: 20px;
+}
+h3 { margin-left: 20px; }
+.headline {
+    margin-left: 20px;
+}
+.menu { position: fixed; top: 15; left: 15; height: 100%; overflow-y: scroll; }
+.menu ul { list-style-type: none; padding-left: 20px; }
+.menu li.splitter { border-bottom: 1px solid #ccc; }
+</style>
+
+<div class="col-sm-2">
+    <div class="menu">
+        <h5>Documentation</h5>
+        <ul>
+            <li>
+                <a href="docs.html#docs-about">About</a>
+            </li>
+            <li>
+                <a href="docs.html#docs-simple">Simple example</a>
+            </li>
+            <li>
+                <a href="docs.html#docs-future">Future</a>
+            </li>
+            <li>
+                <a href="docs.html#docs-seq">Calls in sequence</a>
+            </li>
+            <li>
+                <a href="docs.html#docs-reuse">Code reuse</a>
+            </li>
+            <li>
+                <a href="docs.html#docs-par">Parallel</a>
+            </li>
+            <li>
+                <a href="docs.html#docs-func">Functionality</a>
+            </li>
+            <li>
+                <a href="docs.html#docs-config">Config</a>
+            </li>
+            <li>
+                <a href="docs.html#docs-concl">Conclution</a>
+            </li>
+        </ul>
+
+        <hr/>
+
+        <h5>API</h5>
+        <h5>Future</h5>
+        <ul>
+            <li>
+                <a href="api.html#future-about">About</a>
+            </li>
+            <li class="splitter">
+            </li>
+            <li>
+                <a href="api.html#future-resolve">resolve</a>
+            </li>
+            <li>
+                <a href="api.html#future-reject">reject</a>
+            </li>
+            <li>
+                <a href="api.html#future-fallback">fallback</a>
+            </li>
+            <li>
+                <a href="api.html#future-check">check</a>
+            </li>
+            <li>
+                <a href="api.html#future-modify">modify</a>
+            </li>
+            <li>
+                <a href="api.html#future-map">map</a>
+            </li>
+            <li>
+                <a href="api.html#future-filter">filter</a>
+            </li>
+            <li>
+                <a href="api.html#future-key">key</a>
+            </li>
+            <li>
+                <a href="api.html#future-index">index</a>
+            </li>
+            <li>
+                <a href="api.html#future-apply">apply</a>
+            </li>
+            <li>
+                <a href="api.html#future-foreach">foreach</a>
+            </li>
+            <li>
+                <a href="api.html#future-catch">catch</a>
+            </li>
+        </ul>
+
+        <h5>Inline</h5>
+        <ul>
+            <li>
+                <a href="api.html#inline-unwrap">unwrap</a>
+            </li>
+            <li class="splitter">
+                <a href="api.html#inline-about">About</a>
+            </li>
+            <li>
+                <a href="api.html#inline-get">get</a>
+            </li>
+            <li>
+                <a href="api.html#inline-jsonp">jsonp</a>
+            </li>
+            <li>
+                <a href="api.html#inline-post">post</a>
+            </li>
+            <li>
+                <a href="api.html#inline-body">body</a>
+            </li>
+            <li>
+                <a href="api.html#inline-sleep">sleep</a>
+            </li>
+            <li>
+                <a href="api.html#inline-run">run</a>
+            </li>
+            <li>
+                <a href="api.html#inline-if">if</a>
+            </li>
+            <li>
+                <a href="api.html#inline-ifnot">ifnot</a>
+            </li>
+            <li>
+                <a href="api.html#inline-foreach">foreach</a>
+            </li>
+            <li>
+                <a href="api.html#inline-map">map</a>
+            </li>
+            <li>
+                <a href="api.html#inline-filter">filter</a>
+            </li>
+            <li>
+                <a href="api.html#inline-concat">concat</a>
+            </li>
+            <li>
+                <a href="api.html#inline-par">par</a>
+            </li>
+            <li>
+                <a href="api.html#inline-script">script</a>
+            </li>
+            <li>
+                <a href="api.html#inline-img">img</a>
+            </li>
+            <li class="splitter">
+            </li>
+            <li>
+                <a href="api.html#inline-start">start</a>
+            </li>
+            <li>
+                <a href="api.html#inline-stop">stop</a>
+            </li>
+            <li>
+                <a href="api.html#inline-reset">reset</a>
+            </li>
+            <li>
+                <a href="api.html#inline-pause">pause</a>
+            </li>
+            <li>
+                <a href="api.html#inline-resume">resume</a>
+            </li>
+            <li>
+                <a href="api.html#inline-skip">skip</a>
+            </li>
+            <li>
+                <a href="api.html#inline-future">future</a>
+            </li>
+            <li>
+                <a href="api.html#inline-instanceOf">instanceOf</a>
+            </li>
+        </ul>
+    </div>
+</div>
+
+
+
+<div class="col-sm-10">
+
+<div>
+    <h3>Future</h3>
+</div>
+
+<div class="box" id="future-about">
+    <h5>About Future</h5>
+    
+    <p>All <code>Inline</code> methods that add an action to the callchain return a <code>Future</code> object.</p>
+    <p>When the action has finished the result will be attached to the <code>data</code> field of the <code>Future</code> object if the action is successful. Else the error will be attached to the <code>error</code> filed.</p>
+    <p>The <code>Future</code> offers methods to work with and modify the data once the <code>Future</code> is resolved. Note that if you try to call them on a resolved <code>Future</code> nothing will happen.</p>
+
+    <p>These methods come in three categories and they are called in this order.</p>
+    <ul>
+        <li>Resolvers: called when an action returns result.
+        <li>Switchers: determine whether the future should resolve as success or error.</li>
+        <li>Modifiers: modify the data that is attached to the <code>data</code> field.</li>
+        <li>Callbacks: will be applied to the data.</li>
+    </ul>
+
+    <hr>
+
+    <h5 id="future-about-resolvers">Resolvers</h5>
+    <p>Methods:</p>
+    <ul>
+        <li>fallback</li>
+        <li>check</li>
+    </ul>
+    <p>The resolver methods are called when the corresponding action in the call chain finishes in error or success. When they are called they run the switcher, modifier and callback mehods.</p>
+
+    <hr>
+
+    <h5 id="future-about-switchers">Switchers</h5>
+    <p>Methods:</p>
+    <ul>
+        <li>fallback</li>
+        <li>check</li>
+    </ul>
+    <p>Switchers are run after the resolvers and determine whether the future should resolve as success or error.</p>
+
+    <hr>
+
+    <h5 id="future-about-modifiers">Modifiers</h5>
+    <p>Methods:</p>
+    <ul>
+        <li>modify</li>
+        <li>key</li>
+        <li>index</li>
+        <li>map</li>
+        <li>filter</li>
+    </ul>
+
+    <p>Modifiers are run after the switchers. They differ from callbacks in that they modify the the data.</p>
+    <p>You can not chain modifiers. If you do only the last one will be used. If you feel you need to chain modifiers consider putting your logic in to a function and pass it to <code>modify</code>.</p>
+
+    <hr>
+
+    <h5 id="future-about-callbacks">Callbacks</h5>
+    <p>Methods:</p>
+    <ul>
+        <li>apply</li>
+        <li>foreach</li>
+        <li>catch</li>
+    </ul>
+    <p>Callbacks are run after the modifiers so if modifiers are used the data will be modified first.</p>
+    <p><code>apply</code> and <code>foreach</code> are run when the action is successful and <code>catch</code> with the action results in an error.</p>
+    <p>Note that you can not use both <code>apply</code> and <code>foreach</code> because the override each other.</p>  
+
+    <hr>
+
+    <h5 id="future-resolve">Future method: resolve</h5>
+    <p><code>future.resolve(any)</code></p>
+    <p>Category: <a href="api.html#future-about-resolvers">Resolver</a></p>
+    <p>Run: by <code>Inline</code> or directly</p>
+
+    <p>This method is called when the action is successful with the data as an argument if any.</p>
+    <p>If you wish to use the future independantly of the call chain you can call <code>inline.future()</code>. This will give you an unresolved future that does not have a corresponding action in the call chain. You will then have to resolve it yourself.</p>
+    <pre>var future = inline.future().resolve({someKey: 'someValue'});</pre>
+
+    <h5 id="future-reject">Future method: reject</h5>
+    <p><code>future.reject(error)</code></p>
+    <p>Category: <a href="api.html#future-about-resolvers">Resolver</a></p>
+    <p>Run: by <code>Inline</code> or directly</p>
+
+    <p>Called when an action results in an error.</p>
+    <p>If the action is an ajax request the retured data will be attached to <code>future.error</code>.</p>
+    <p>If it is an error thrown in the callchain <code>future.error</code> will get <code>error.message</code>.</p> 
+
+    <hr>
+
+    <h5 id="future-fallback">Future method: fallback</h5>
+    <p><code>future.fallback(any)</code></p>
+    <p>Category: <a href="api.html#future-about-switchers">Switcher</a></p>
+    <p>Run: after <code>reject</code></p>
+
+    <p>If the action results in an error and the reject method is called it will check if data has been passed to the <code>fallback</code> method. If so then the future will resolve in success with the fallback data attached to the <code>data</code> field. The callback, if any will be applied to the data but the data will not be modified by a modifier.</p>
+    <pre>inline.get('/president', {year: '2025'}).fallback({name: 'Unknown'});</pre>
+
+    <hr>
+
+    <h5 id="future-check">Future method: check</h5>
+    <p><code>future.check(function)</code></p>
+    <p>Category: <a href="api.html#future-about-switchers">Switcher</a></p>
+    <p>Run: after <code>resolve</code></p>
+
+    <p>If the future resolves as success the function passed to the <code>check</code> method will determine if the future should be resolved as error. The function passed to <code>check</code> takes the data as argument and must return a boolean, true if success an false if error.</p>
+    <p>It can be handy to use <code>check</code> with <code>fallback</code> for example if we want the fallback if we get an empty array.</p>
+<pre>
+function hasLength(data) {
+    return data.length > 0;
+}
+future.fallback(['a', 'b', 'c']).check(hasLength);
+</pre>
+
+    <p><code>check</code> also takes a simple expressions as a string. The data is refered to as 'data'.</p>
+<pre>future.fallback(['a', 'b', 'c']).check('data.length > 0');</pre>
+    
+    <hr>
+
+    <h5 id="future-modify">Future method: modify</h5>
+    <p><code>future.modify(function)</code></p>
+    <p>Category: <a href="api.html#future-about-modifiers">Modifier</a></p>
+    <p>Run: after switchers if success</p>
+
+    <p>The function passed to <code>modify</code> take the data as an argument and returns the modified data. The result will be attached to the <code>data</code> field.</p>
+    <p>Note that you have to return the modified data else the data field will get <code>undefined</code>.</p>
+
+<pre>
+// data = {"make":"Chevrolet","year":1968,"model":"Corvette"}
+function makeModel(data) {
+    return data.make + ' ' + data.model;
+}
+future.modify(makeModel);
+// data = 'Chevrolet Corvette'
+</pre>
+    
+    <p><code>modify</code> also takes a simple expressions as a string. The data is refered to as 'data'.</p></p>
+
+<pre>future.modify('data.make + " " + data.model');</pre>
+
+    <hr>
+
+    <h5 id="future-map">Future method: map</h5>
+    <p><code>future.map(function)</code></p>
+    <p>Category: <a href="api.html#future-about-modifiers">Modifier</a></p>
+    <p>Run: after switchers if success</p>
+
+    <p>If the data is an array the passed function will be applied to each item and the modified array attached to the <code>data</code>field.</p>
+    <p>If the data is not an array it will passed to the function and the result set to <code>data</code>.</p>
+    <p>Note that the function will have to return the the modified value. If undefined is returned and the data is an array undefined will not be appended to the new array.</p>
+
+<pre>
+// data = [7, 2, 4];
+function multiplyLargerThanTwo(item) {
+    if (item > 2)
+        return item * 2;
+}
+future.map(multiplyLargerThanTwo);
+// data = [14, 8];
+</pre>
+
+    <p><code>map</code> also takes a simple expressions as a string. Each item is refered to as 'item'.</p>
+
+<pre>future.map('item * 2');</pre>
+
+    <hr>
+
+    <h5 id="future-filter">Future method: filter</h5>
+    <p><code>future.filter(function)</code></p>
+    <p>Category: <a href="api.html#future-about-modifiers">Modifier</a></p>
+    <p>Run: after switchers if success</p>
+
+    <p>The filter method is used when the data is an array to create a new array of the items that result in true when passed to the function.</p>
+    <p>Note that if the data is not an array it will be treated as an array with the data as the only item.</p>
+
+<pre>
+// data = [7, 2, 4];
+function largerThanTwo(item) {
+    return item > 2;
+}
+future.filter(largerThanTwo);
+// data = [7, 4];
+</pre>
+
+    <p><code>filter</code> also takes a simple expressions as a string. Each item is refered to as 'item'.</p>
+
+<pre>future.filter('item > 2');</pre>
+
+    <hr>
+
+    <h5 id="future-key">Future method: key</h5>
+    <p><code>future.key(string)</code></p>
+    <p>Category: <a href="api.html#future-about-modifiers">Modifier</a></p>
+    <p>Run: after switchers if success</p>
+
+    <p>Here the data must be an object. The key will be looked up and the value attached to the <code>data</code> field.</p>
+
+<pre>
+// data = {"make":"Chevrolet","year":1968,"model":"Corvette"}
+future.key('model');
+// data = 'Corvette'
+</pre>
+
+    <hr>
+
+    <h5 id="future-index">Future method: index</h5>
+    <p><code>future.key(integer)</code></p>
+    <p>Category: <a href="api.html#future-about-modifiers">Modifier</a></p>
+    <p>Run: after switchers if success</p>
+
+    <p>Here the data must be an array. The index will be looked up and the value attached to the <code>data</code> field.</p>
+
+<pre>
+// data = [{"make":"Chevrolet","year":1968,"model":"Corvette"}, ... ]
+future.index(0);
+// data = {"make":"Chevrolet","year":1968,"model":"Corvette"}
+</pre>
+
+    <hr>
+
+    <h5 id="future-about-apply">Future method: apply</h5>
+    <p><code>future.apply(function)</code></p>
+    <p>Category: <a href="api.html#future-about-callbacks">Callback</a></p>
+    <p>Run: after modifiers if success</p>
+
+    <p>The <code>apply</code> takes a function as an argument that will be applied to the data.</p>
+<pre>
+function showModel(data) {
+    document.getElementById('model').textContent = data.model;
+}
+// data = {"make":"Chevrolet","year":1968,"model":"Corvette"}
+future.apply(showMode);
+</pre>
+
+    <hr>
+
+    <h5 id="future-about-foreach">Future method: foreach</h5>
+    <p><code>future.foreach(function)</code></p>
+    <p>Category: <a href="api.html#future-about-callbacks">Callback</a></p>
+    <p>Run: after modifiers if success</p>
+
+    <p>The <code>foreach</code> method takes a function as an argument.</p>
+
+    <p>If the data is an array it will iterate over it an call the function on each item with the index and data as 2nd an 3rd argument.</p>
+    <p><code>function(item, index, data)</code></p>
+    <p>Else if the data is an object key will be passes instead of the index.</p>
+    <p><code>function(value, key, data)</code></p>
+    <p>If the data is not an array or an object it will be treated as an array with the data as the only item.</p>
+<pre>
+function addModel(item) {
+    document.getElementById('name').textContent += item.model;
+}
+// data = [{"make":"Chevrolet",model":"Corvette"}, {"make":Ford","model":"Mustang"}, ... ]
+future.foreach(addModel);
+</pre>
+
+    <hr>
+
+    <h5 id="future-about-catch">Future method: catch</h5>
+    <p><code>future.catch(function)</code></p>
+    <p>Category: <a href="api.html#future-about-callbacks">Callback</a></p>
+    <p>Run: after modifiers if error</p>
+    
+    <p>In case of an error the function will be called with the error message as an argument.</p>
+
+<pre>
+// error = {"error":"not found"}
+inline.get('/president', {year: '2025'}).catch(function(error) {
+    alert('President ' + error.error);
+});
+</pre>
+</div>
+
+
+<div class="box">
+    <h3>Inline</h3>
+
+    <h5 id="inline-get">Inline method: get</h5>
+    <p><code>inline.get(url[, params, config])</code></p>
+    <p>params: an object of key/value pairs that will be turned into a query string. The params object will first be passed to the <code>unwrap</code> method that will replace all futures and future values with the data.</p>
+    <p>config: the get method depends in jQuery for ajax. Refer to the jQuery documentation for the config.</p>
+    <p>Returns: <a href="api.html#future-about">Future</a></p>
+    <p>Data passed to future: response from server</p>
+    <p>Error passed to future: error response from server</p>
+
+    <p><code>get</code> adds a GET request to the call chain.</p>
+
+<pre>
+// URL http://inlinejs.net/cars?make=Porsche
+var future = inline.get('/cars', {make: 'Porsche'});
+</pre>
+
+    <hr>
+
+    <h5 id="inline-jsonp">Inline method: jsonp</h5>
+    <p><code>inline.jsonp(url[, params, config])</code></p>
+    <p>params: an object of key/value pairs that will be turned into a query string. The params object will first be passed to the <code>unwrap</code> method that will replace all futures and future values with the data.</p>
+    <p>config: the get method depends in jQuery for ajax. Refer to the jQuery documentation for the config.</p>
+    <p>Returns: <a href="api.html#future-about">Future</a></p>
+    <p>Data passed to future: response from server</p>
+    <p>Error passed to future: error response from server</p>
+
+    <p><code>jsonp</code> adds a JSONP request to the call chain.</p>
+
+<pre>
+// URL http://inlinejs.net/cars?make=Porsche&callback=?
+var future = inline.jsonp('/cars', {make: 'Porsche'});
+</pre>
+
+    <hr>
+
+    <h5 id="inline-post">Inline method: post</h5>
+    <p><code>inline.post(url[, params, config])</code></p>
+    <p>params: an object of key/value pairs that will be turned into a query string. The params object will first be passed to the <code>unwrap</code> method that will replace all futures and future values with the data.</p>
+    <p>config: the get method depends in jQuery for ajax. Refer to the jQuery documentation for the config.</p>
+    <p>Returns: <a href="api.html#future-about">Future</a></p>
+    <p>Data passed to future: response from server</p>
+    <p>Error passed to future: error response from server</p>
+
+    <p><code>post</code> adds a POST request to the call chain.</p>
+
+<pre>
+// URL http://inlinejs.net/add-car
+// BODY make=Porshce&model=911
+var future = inline.post('/add-car', {make: 'Porsche', model: '911'});
+</pre>
+
+    <hr>
+
+    <h5 id="inline-body">Inline method: body</h5>
+    <p><code>inline.body(url[, params, config])</code></p>
+    <p>params: an object of key/value pairs that will be turned into a JSON string. The params object will first be passed to the <code>unwrap</code> method that will replace all futures and future values with the data.</p>
+    <p>config: the get method depends in jQuery for ajax. Refer to the jQuery documentation for the config.</p>
+    <p>Returns: <a href="api.html#future-about">Future</a></p>
+    <p>Data passed to future: response from server</p>
+    <p>Error passed to future: error response from server</p>
+
+    <p><code>body</code> adds a POST request to the call chain. The request body will contin a JSON string instead of a query string.</p>
+
+<pre>
+// URL http://inlinejs.net/add-car
+// BODY {"make":"Porshce","model":"911"}
+var future = inline.post('/add-car', {make: 'Porsche', model: '911'});
+</pre>
+
+    <hr>
+
+    <h5 id="inline-sleep">Inline method: sleep</h5>
+    <p><code>inline.sleep(time)</code></p>
+    <p>params: time in milliseconds</p>
+    <p>Returns: <a href="api.html#future-about">Future</a></p>
+    <p>Data passed to future: <code>undefined</code></p>
+    <p>Error passed to future: None</p>
+
+    <p><code>sleep</code> adds a timeout to the call chain.</p>
+
+<pre>
+// sleep for 500ms
+inline.sleep(500);
+</pre>
+
+    <hr>
+
+    <h5 id="inline-run">Inline method: run</h5>
+    <p><code>inline.run(function[, arg, arg, ... ])</code></p>
+    <p>args: zero or more args.</p>
+    <p>Returns: <a href="api.html#future-about">Future</a></p>
+    <p>Data passed to future: Any data returned by the function</p>
+    <p>Error passed to future: Any error thrown in the body of the function.</p>
+
+    <p><code>run</code> runs the function passed to it. All args will be passed to <code>unwrap</code> and the result passed on to the function.</p>
+
+<pre>
+var future = inline.get('/president?year=1940');
+inline.run(function() {
+    document.getElementById('president').textContent = future.data.name; 
+});
+</pre>
+    
+    <p>or</p>
+
+<pre>
+function showName(name) {
+    document.getElementById('president').textContent = name; 
+});
+var future = inline.get('/president?year=1940');
+inline.run(showName, {'data.name': future});
+</pre>
+
+    <hr>
+
+    <h5 id="inline-if">Inline method: if</h5>
+    <p><code>inline.if(condition, function)</code></p>
+    <p>condition: boolean, future or future value.</p>
+    <p>Returns: <a href="api.html#future-about">Future</a></p>
+    <p>Data passed to future: Any data returned by the function</p>
+    <p>Error passed to future: Any error thrown in the body of the function.</p>
+
+    <p><code>if</code> runs if the condition is true. The condition will be passed to <code>unwrap</code> before evaluated. If a future is passed <code>future.isSuccess</code> will be evaluated.</p>
+
+<pre>
+var future = inline.get('/cars?search=Ford');
+inline.if({'data.length > 0': future}, function() {
+   // handle data 
+});
+</pre>
+
+    <hr>
+
+    <h5 id="inline-ifnot">Inline method: ifnot</h5>
+    <p><code>inline.ifnot(condition, function)</code></p>
+    <p>condition: boolean, future or future value.</p>
+    <p>Returns: <a href="api.html#future-about">Future</a></p>
+    <p>Data passed to future: Any data returned by the function</p>
+    <p>Error passed to future: Any error thrown in the body of the function.</p>
+
+    <p><code>ifnot</code> runs if the condition is false. The condition will be passed to <code>unwrap</code> before evaluated. If a future is passed <code>future.isSuccess</code> will be evaluated.</p>
+
+<pre>
+var president = inline.get('/president?year=2025');
+inline.ifnot(president, function() {
+    president = inline.get('/president?year=1925');
+});
+</pre>
+
+    <hr>
+
+    <h5 id="inline-foreach">Inline method: ifnot</h5>
+    <p><code>inline.foreach(collection, function)</code></p>
+    <p>collection: any collection, future or future value.</p>
+    <p>function: <code>function(item|value, index|key, collection)</code></p>
+    <p>Returns: <a href="api.html#future-about">Future</a></p>
+    <p>Data passed to future: <code>undefined</code></p>
+    <p>Error passed to future: Any error thrown in the body of the function.</p>
+
+    <p>Collection passed to <code>foreach</code> will first be passed to <code>unwrap</code>. If the collection is an array the index will be pased to the function as second argument. If it is an object the key will be the second argument. If collection is not an array or an object it will be treated as an array with collection as the only argument</p>
+    <p><code>foreach</code> behaves like the foreach method on the future object and does not return anything.</p>
+
+<pre>
+var cars = inline.get('/cars?year=2000');
+inline.foreach(cars, function(car) {
+    document.getElementById('cars').textContent += car.model; 
+});
+</pre>
+
+<hr>
+
+    <h5 id="inline-map">Inline method: map</h5>
+    <p><code>inline.map(collection, function)</code></p>
+    <p>collection: array, future or future value.</p>
+    <p>function: <code>function(item)</code></p>
+    <p>Returns: <a href="api.html#future-about">Future</a></p>
+    <p>Data passed to future: array</p>
+    <p>Error passed to future: Any error thrown in the body of the function.</p>
+
+    <p><code>map</code> will apply the function to each item in the collection. The collection will first be passed to <code>unwrap</code>. If collection is not an array it will be treated as an array with collection as the only argument</p>
+    <p><code>map</code> behaves like the map method on but returns the modified version to the future it returns.</p>
+    <p>You have to return the the modified value. I undefined is returned it will not be appended to the result array.</p>
+
+<pre>
+var cars = inline.get('/cars?year=2000');
+var makeModel = inline.map(cars, function(car) {
+    return car.make + ' ' + car.model;
+});
+</pre>
+    
+    <p><code>map</code> also takes a simple expressions as a string. Each item is refered to as 'item'.</p>
+
+<pre>
+var cars = inline.get('/cars?year=2000');
+var makeModel = inline.map(cars, 'item.make + " " + item.model');
+</pre>
+
+<hr>
+
+    <h5 id="inline-filter">Inline method: filter</h5>
+    <p><code>inline.filter(collection, function)</code></p>
+    <p>collection: array, future or future value.</p>
+    <p>function: <code>function(item)</code></p>
+    <p>Returns: <a href="api.html#future-about">Future</a></p>
+    <p>Data passed to future: array</p>
+    <p>Error passed to future: Any error thrown in the body of the function.</p>
+
+    <p>The function passed to <code>filter</code> must take item as an argument and return boolean. All items that return <code>true</code> when passed to the function will be appended to the new array that will be passed to the future.</p>
+    <p>The collection will first be passed to <code>unwrap</code> to resolve futures. If collection is not an array it will be treated as an array with collection as the only argument</p>
+
+<pre>
+// filter all Fords of 2000
+var cars = inline.get('/cars?year=2000');
+var fords = inline.filter(cars, function(car) {
+    return car.make === 'Ford';
+});
+</pre>
+    
+    <p><code>filter</code> also takes a simple expressions as a string. Each item is refered to as 'item'.</p>
+
+<pre>
+var cars = inline.get('/cars?year=2000');
+var fords = inline.filter(cars, 'item.make === "Ford"');
+</pre>
+
+    <hr>
+
+    <h5 id="inline-concat">Inline method: concat</h5>
+    <p><code>inline.filter([arg, arg, ... ])</code></p>
+    <p>arg: any, future or future value.</p>
+    <p>Returns: <a href="api.html#future-about">Future</a></p>
+    <p>Data passed to future: array</p>
+    <p>Error passed to future: Any error thrown.</p>
+
+    <p><code>concat</code> works just like the array method concat. All args will first be passed to <code>unwrap</code> to resolve futures.</p>
+
+<pre>
+var ab = ['a', 'b'];
+var cd = inline.future().resolve(['c', 'd']);
+var abcd = inline.concat(ab, cd);
+// data = ['a', 'b', 'c', 'd'];
+</pre>
+
+<hr>
+
+    <h5 id="inline-par">Inline method: par</h5>
+    <p><code>inline.par(arg)</code></p>
+    <p>arg: futures, array of futures, object of futures</p>
+    <p>Returns: <a href="api.html#future-about">Future</a></p>
+    <p>Data passed to future: array or object of futures</p>
+    <p>Error passed to future: Any error thrown.</p>
+
+    <p><code>par</code> removes the actions associated with the futures passed to it from the call chain and runs them in parallel where <code>par</code> is in the call chain.</p>
+
+<pre>
+var future = inline.par(
+    var president1 = inline.get('/president?year=1920').key('name'),
+    var president1 = inline.get('/president?year=1930').key('name')
+)
+inline.run(function() {
+    var presidents = inline.unwrap(future);
+    // presients = ['Woodrow Wilson', 'Herbert Hoover']  
+});
+</pre>
+
+    <hr>
+
+    <h5 id="inline-script">Inline method: script</h5>
+    <p><code>inline.script(src)</code></p>
+    <p>src: url of the javascript file to load</p>
+    <p>Returns: <a href="api.html#future-about">Future</a></p>
+    <p>Data passed to future: the script element</p>
+    <p>Error passed to future: errors thrown when loading the script.</p>
+
+    <p><code>script</code> creates a script tag and appends it to the body.</p>
+
+<pre>
+// load a js file thar contains magickFunction
+inline.script('/js/magick.js');
+inline.run(function() {
+    magickFunction(); 
+});
+</pre>
+
+<pre>
+var future = inline.par(
+    var president1 = inline.get('/president?year=1920').key('name'),
+    var president1 = inline.get('/president?year=1930').key('name')
+)
+inline.run(function() {
+    var presidents = inline.unwrap(future);
+    // presients = ['Woodrow Wilson', 'Herbert Hoover']  
+});
+</pre>
+
+    <hr>
+
+    <h5 id="inline-img">Inline method: img</h5>
+    <p><code>inline.img(src)</code></p>
+    <p>src: url of the image file to load</p>
+    <p>Returns: <a href="api.html#future-about">Future</a></p>
+    <p>Data passed to future: the Image element</p>
+    <p>Error passed to future: errors thrown when loading the image.</p>
+
+    <p><code>img</code> creates a image element and returns it to the future when the image has loaded.</p>
+
+<pre>
+inline.img('/large-image.jpg').apply(function(img) {
+    document.getElementById('image-container').appendChild(img);
+});
+</pre>
+
+</pre>
+
+    <hr>
+
+    <h5 id="inline-unwrap">Inline method: unwrap</h5>
+    <p><code>inline.unwrap(arg)</code></p>
+    <p>arg: future, future value, array of futures or object of futures.</p>
+    <p>Returns: future replaced with data</p>
+
+    <p>Starts the call chain. If you have autoStart on you don't have to call start.</p>
+
+    <hr>
+
+    <h5 id="inline-start">Inline method: start</h5>
+    <p><code>inline.start()</code></p>
+    <p>Returns: <code>undefined</code></p>
+
+    <p>Starts the call chain. If you have autoStart on you don't have to call start.</p>
+
+    <hr>
+
+    <h5 id="inline-stop">Inline method: stop</h5>
+    <p><code>inline.stop()</code></p>
+    <p>Returns: <code>undefined</code></p>
+
+    <p>Stops the callchain and then calls <code>reset</code></p>
+
+    <hr>
+
+    <h5 id="inline-reset">Inline method: reset</h5>
+    <p><code>inline.reset()</code></p>
+    <p>Returns: <code>undefined</code></p>
+
+    <p>Resets the call cahin.</p>
+
+    <hr>
+
+    <h5 id="inline-pause">Inline method: pause</h5>
+    <p><code>inline.pause()</code></p>
+    <p>Returns: <code>undefined</code></p>
+
+    <p>Pauses the call chain. Use <code>resume</code> to start the call chain again.</p>
+
+    <hr>
+
+    <h5 id="inline-resume">Inline method: resume</h5>
+    <p><code>inline.resume()</code></p>
+    <p>Returns: <code>undefined</code></p>
+
+    <p>Starts the call chain after it has been paused.</p>
+
+    <hr>
+
+
+    <h5 id="inline-skip">Inline method: skip</h5>
+    <p><code>inline.skip()</code></p>
+    <p>Returns: <code>undefined</code></p>
+    <p>Error passed to future: "skip"</p>
+
+    <p>Skip throws an error and the call chain then moves on to the next action.</p>
+
+<pre>
+inline.run(function() {
+    if (someCondition)
+        inline.skip();
+    // do something
+});
+</pre>
+
+    <h5 id="inline-future">Inline method: future</h5>
+    <p><code>inline.future()</code></p>
+    <p>Returns: <a href="api.html#future-about">Future</a></p>
+
+    <p>Returns an unresolved future that is not connected to any action in the call chain.</p>
+
+    <hr>
+
+    <h5 id="inline-instanceof">Inline method: instanceOf</h5>
+    <p><code>inline.instanceOf(config)</code></p>
+    <p>Returns: an instance of <code>Inline</code></p>
+
+    <p>Returns a new instance of Inline with the same config. You can also pass config to <code>instanceOf</code></p>
+
+    <hr>
+
+</div>
+
+</div>
+
+</body>
+</html>

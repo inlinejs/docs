@@ -1,0 +1,893 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>Doc</title>
+    
+    <script src="js/jquery-2.1.3.min.js"></script>
+    <script src="js/inline-0.9.3.js"></script>
+    
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.css"/>
+
+</head>
+
+<body ng-app="app">
+
+<style>
+.box {
+    border: 1px solid #ccc;
+    padding: 20px;
+    padding-top: 0px;
+    margin: 20px;
+}
+.headline {
+    margin-left: 20px;
+}
+.menu { position: fixed; top: 15; left: 15; height: 100%; overflow-y: scroll; }
+.menu ul { list-style-type: none; padding-left: 20px; }
+.menu li.splitter { border-bottom: 1px solid #ccc; }</style>
+
+<div class="col-sm-2">
+    <div class="menu">
+        <h5>Documentation</h5>
+        <ul>
+            <li>
+                <a href="docs.html#docs-about">About</a>
+            </li>
+            <li>
+                <a href="docs.html#docs-simple">Simple example</a>
+            </li>
+            <li>
+                <a href="docs.html#docs-future">Future</a>
+            </li>
+            <li>
+                <a href="docs.html#docs-seq">Calls in sequence</a>
+            </li>
+            <li>
+                <a href="docs.html#docs-reuse">Code reuse</a>
+            </li>
+            <li>
+                <a href="docs.html#docs-par">Parallel</a>
+            </li>
+            <li>
+                <a href="docs.html#docs-func">Functionality</a>
+            </li>
+            <li>
+                <a href="docs.html#docs-config">Config</a>
+            </li>
+            <li>
+                <a href="docs.html#docs-concl">Conclution</a>
+            </li>
+        </ul>
+
+        <hr/>
+
+        <h5>API</h5>
+        <h5>Future</h5>
+        <ul>
+            <li>
+                <a href="api.html#future-about">About</a>
+            </li>
+            <li class="splitter">
+            </li>
+            <li>
+                <a href="api.html#future-resolve">resolve</a>
+            </li>
+            <li>
+                <a href="api.html#future-reject">reject</a>
+            </li>
+            <li>
+                <a href="api.html#future-fallback">fallback</a>
+            </li>
+            <li>
+                <a href="api.html#future-check">check</a>
+            </li>
+            <li>
+                <a href="api.html#future-modify">modify</a>
+            </li>
+            <li>
+                <a href="api.html#future-map">map</a>
+            </li>
+            <li>
+                <a href="api.html#future-filter">filter</a>
+            </li>
+            <li>
+                <a href="api.html#future-key">key</a>
+            </li>
+            <li>
+                <a href="api.html#future-index">index</a>
+            </li>
+            <li>
+                <a href="api.html#future-apply">apply</a>
+            </li>
+            <li>
+                <a href="api.html#future-foreach">foreach</a>
+            </li>
+            <li>
+                <a href="api.html#future-catch">catch</a>
+            </li>
+        </ul>
+
+        <h5>Inline</h5>
+        <ul>
+            <li class="splitter">
+                <a href="api.html#inline-about">About</a>
+            </li>
+            <li>
+                <a href="api.html#inline-get">get</a>
+            </li>
+            <li>
+                <a href="api.html#inline-jsonp">jsonp</a>
+            </li>
+            <li>
+                <a href="api.html#inline-post">post</a>
+            </li>
+            <li>
+                <a href="api.html#inline-map">body</a>
+            </li>
+            <li>
+                <a href="api.html#inline-sleep">sleep</a>
+            </li>
+            <li>
+                <a href="api.html#inline-run">run</a>
+            </li>
+            <li>
+                <a href="api.html#inline-if">if</a>
+            </li>
+            <li>
+                <a href="api.html#inline-ifnot">ifnot</a>
+            </li>
+            <li>
+                <a href="api.html#inline-foreach">foreach</a>
+            </li>
+            <li>
+                <a href="api.html#inline-map">map</a>
+            </li>
+            <li>
+                <a href="api.html#inline-filter">filter</a>
+            </li>
+            <li>
+                <a href="api.html#inline-map">concat</a>
+            </li>
+            <li>
+                <a href="api.html#inline-par">par</a>
+            </li>
+            <li>
+                <a href="api.html#inline-script">script</a>
+            </li>
+            <li>
+                <a href="api.html#inline-img">img</a>
+            </li>
+            <li class="splitter">
+            </li>
+            <li>
+                <a href="api.html#inline-start">start</a>
+            </li>
+            <li>
+                <a href="api.html#inline-stop">stop</a>
+            </li>
+            <li>
+                <a href="api.html#inline-reset">reset</a>
+            </li>
+            <li>
+                <a href="api.html#inline-pause">pause</a>
+            </li>
+            <li>
+                <a href="api.html#inline-resume">resume</a>
+            </li>
+            <li>
+                <a href="api.html#inline-skip">skip</a>
+            </li>
+            <li>
+                <a href="api.html#inline-future">future</a>
+            </li>
+            <li>
+                <a href="api.html#inline-instanceOf">instanceOf</a>
+            </li>
+            <li>
+                <a href="api.html#inline-unwrap">unwrap</a>
+            </li>
+        </ul>
+    </div>
+</div>
+
+
+<div class="col-sm-10">
+
+    <div class="box" id="docs-about">
+        <h5>Inlinejs is a javascript library that allows you to write asynchrous code in logical synchrounous order.
+            This is done by using futures and running a callchain in the background.</h5>
+        <br>
+        The purpose is:
+        <ul>
+            <li>To avoid the spaghetti code that results from many nested callbacks</li>
+            <li>To make a code with mutiple asynchrous callbacks easy to reason and maintain</li>
+            <li>To make it easy to control the flow of asynchrous code</li>
+            <li>To make it easier to reuse asynchronous code</li>
+        </ul>
+        <br>
+
+        <p><a href="js/inline-0.9.1.js">Download inline-0.9.1.js</a></p>
+        
+        For demonstration I have set up a simple REST API <br>
+        <br>
+        
+        <h5>US presidents</h5>
+        
+        <p>Find a president by year:</p>
+        <p>
+            <code>/president?year=2015</code>
+        </p>
+        <pre>{"end":2017,"name":"Barack Obama","no":44,"start":2009}</pre>
+        
+        <h5>Cars</h5>
+        <p>Find cars:</p>
+        <p>    
+            <code>/cars?search=BMW</code>
+        </p>
+        <pre>[{"make":"BMW","year":1957,"model":"600"}, ... ]</pre>
+
+
+    </div>
+
+    <div class="box" id="docs-simple">
+        <h5>Simple example</h5>
+
+        <p>To use inline.js you start by creating an instance</p>
+        <p><code>var inline = new Inline();</code></p>
+        <p>Then we add actions to the call chain, for example a GET request.</p>
+        <p><code>inline.get('http://inlinejs/president ... ');</code></p>
+        <p>We use the <code>run</code> method to add a function to run after the GET request.</p>
+        <p><code>inline.run(function() { ... });</code></p>
+        <h5>Consider the folowing example</h5>
+        <p>
+            <button id="ex1-run">Run</button>
+            <span id="example1"></span>
+        </p>
+
+<pre>
+var inline = new Inline();
+
+var future = inline.get('/president', {year: '2015'});
+
+inline.run(function() {
+    document.getElementById('example1').textContent = future.data.name;
+});
+</pre>
+    <p>Same logic with jQuery.</p>
+<pre>
+$.getJSON('/president', {year: '2015'}).done(function(president) {
+    $('#ex1-result').text(president.name);
+});
+</pre>
+
+        <p>You may think you are no better of here, but then a single callback was never a problem anyway.</p>
+    </div>
+
+    <div class="box" id="docs-future">
+        <h4>Before doing more callchain examples let's look into the Future</h4>
+
+        <p>All methods on <code>Inline</code> that add an action to the callchain return a Future.</p>
+        <p>The Future is an object that will recieve the promised data when the callback runs behind the scenes and in case of an error the Future will hold the error.</p>
+
+        <p><code>future.isResolved</code> <samp>boolean</samp> tells you if the Future is resolved.</p>
+        <p><code>future.isSuccess</code> <samp>boolean</samp> was it successfull.</p>
+        <p><code>future.data</code> <samp>any</samp> holds the returned data.</p>
+        <p><code>future.isError</code> <samp>boolean</samp> was there an error.</p>
+        <p><code>future.error</code> <samp>any</samp> holds the error.</p>
+
+        <p><code>Inline</code> has two methods <code>if</code> and <code>ifnot</code> that take future as an argument and can be used for error handling.</p>
+        <p>We can try this out by requesing the of 2025 which will give an error</p>
+
+<pre>
+var future = inline.get('/president', {year: '2025'});
+
+inline.if(future, function() {
+    // handle success
+});
+
+inline.ifnot(future, function() {
+    // handle error 
+}); 
+</pre>
+
+        <p>The Future also has some handy methods that allow us to handle the above example in another way</p>
+        <p>Note that in this case the <code>data</code> and <code>error</code> are passed to the function.</p>
+
+<pre>
+var future = inline.get('/president', {year: '2025'});
+
+future.apply(function(data) {
+    // handle success
+});
+
+future.catch(function(error) {
+    // handle error 
+}); 
+</pre>
+
+        <p>This means that the first example in this tutorial can be handled like this</p>
+
+<pre>
+var printPresident = function(data) {
+    document.getElementById('example1').textContent = data.name;
+}
+
+inline.get('/president', {year: '2015'}).apply(printPresident);
+</pre>
+
+        <p>You can also use the <code>fallback</code> method to return default data in case of error.</p>
+        <p>Note the <code>printPresident</code> function from above.</p>
+
+<pre>
+inline.get('/president', {year: '2025'}).fallback({name: 'Unknown'}).apply(printPresident);
+</pre>
+
+    </div>
+
+    <div class="box" id="docs-seq">
+        <div class="row">
+            <div class="col-sm-8">
+                <h4>Here we will examine a callchain with three requests in a sequence</h4>
+                <ul>
+                    <li>First: we want to get the first year Porsche 944 model was offered to the market.</li>
+                    <li>Second: we will request who was the US president that year.</li>
+                    <li>Third: we request the BMW models offered the year the president left office.</li>
+                </ul>
+            </div>
+            <div class="col-sm-4">
+                <p style="margin-top: 15px;">
+                    <button id="example2-run">Run</button>
+                </p>
+                <hr>
+                <ul id="example2"></ul>
+            </div>
+        </div>
+
+<pre>
+var porsches = inline.get('/inlinejs/cars', {make: 'Porsche', model: '944', order: 'year'});
+
+var president = inline.get('/inlinejs/president', {year: {'data[0].year': porsches}});
+
+var fords = inline.get('/inlinejs/cars', {make: 'ford', year: {'data.end': president}});
+
+inline.run(function() {
+    var list = document.getElementById('example2');
+    list.innerHTML += 'First Porsche 944: ' + porsches.data[0].year;
+    list.innerHTML += 'US president: ' + president.data.name;
+    list.innerHTML += 'Fords of ' + president.data.end;
+
+    inline.foreach(fords, function(ford) {
+        list.innerHTML += '- Fords' + ford.model;
+    });
+});
+</pre>
+
+    <p>Same logic with jQuery</p>
+
+<pre>
+$.getJSON('/inlinejs/cars', {make: 'Porsche', model: '944', order: 'year'}).done(function(porsches) {
+    
+    $.getJSON('/inlinejs/president', {year: porsches[0].year}).done(function(president) {
+       
+        $.getJSON('/inlinejs/cars', {make: 'ford', year: president.end}).done(function(fords) {
+            
+            $('#example2').append('First Porsche 944: ' + porsches.data[0].year);
+            $('#example2').append('US president: ' + president.data.name);
+            $('#example2').append('Fords of ' + president.data.end);
+
+            $.each(fords, function(index, ford) {
+                $('#example2').append('- Ford' + ford.model);
+            });
+        });
+    });
+});
+</pre>
+
+        <p>Lets examine how this works</p>
+        <pre>var fords = inline.get('/inlinejs/cars', {make: 'ford', year: {'data.end': president}});</pre>
+        <p>This query returns a future array of Porsche 944 ordered by year.</p>
+        <p>We want to pass the year of the the first one as a query parameter to get the president.</p>
+        <p>This is done by passing what we call <samp>future value</samp>.</p>
+        <pre>{'data[0].year': fords}</pre>
+        <p>This is simply an object where the key, a <samp>(string)</samp> is a path to the value we want and the object value is the future.</p>
+        <p>Before the president request is sent, all <samp>future values</samp> are replaced with the data now available from the previous request.</p> 
+        <hr>
+        <p>You can use simple expressions in the key string of the <samp>future value</samp>.</p>
+        <p>Consider this example to check if the president from the example above was a two-term president.</p>
+
+<pre>
+inline.if({'data.end - data.start > 4': president}, function() {
+    // handle two-term president
+});
+</pre>
+
+        <p>You may have questions about the <code>foreach</code> method used above.</p>
+        <p>There are two things to note here. First, when you pass a <samp>future</samp> to an <code>Inline</code> method the data field will be used by default</p>
+        <pre>inline.foreach(fords, function(ford) { ... });</pre>
+        <p>is the same as:</p>
+        <pre>inline.foreach({'data': fords}, function(ford) { ... });</pre>
+        <p>with the exception of <code>if</code> and <code>ifnot</code> methods where:</p>
+        <pre>inline.if(president, function() { ... });</pre>
+        <p>is the same as:</p>
+        <pre>inline.if({'isSuccess': president}, function() { ... });</pre>
+
+    <style>
+    #example2 { height: 100px; overflow-y: scroll;}
+    </style>
+
+    <script>
+
+        $('#example2-run').on('click', function() {
+            document.getElementById('example2').innerHTML = '';
+
+            var inline = new Inline();
+
+            //var porsches = inline.get('/cars', {make: 'Porsche', model: '944', order: 'year'});
+            var porsches = inline.jsonp('http://inlinejs.net/cars', {make: 'Porsche', model: '944', order: 'year'});
+
+            //var president = inline.get('/president', {year: {'data[0].year': porsches}});
+            var president = inline.jsonp('http://inlinejs.net/president', {year: {'data[0].year': porsches}});
+
+            //var fords = inline.get('/cars', {make: 'ford', year: {'data.end': president}});
+            var fords = inline.jsonp('http://inlinejs.net/cars', {make: 'ford', year: {'data.end': president}});
+
+
+            inline.run(function() {
+                var list = document.getElementById('example2');
+                list.innerHTML += '<li>First Porsche 944: ' + porsches.data[0].year + '</li>';
+                list.innerHTML += '<li>US president: ' + president.data.name + '</li>';
+                list.innerHTML += '<li>Fords of ' + president.data.end + ':</li>';
+
+                inline.foreach(fords, function(ford) {
+                    list.innerHTML += '<li> - Ford ' + ford.model + '</li>';
+                });
+            });
+        });
+        
+    </script>    
+
+    </div>
+
+    <div class="box" id="docs-reuse">
+        <h4>Code reuse</h4>
+        <div class="row">
+            <div class="col-sm-8">
+                <p>Say we have a section on our page where want to allow users search for cars.</p>
+                <p>And not to have the block empty we fill with out car brand of the day.</p>
+                <p>We would like to automatically show the search results while the user is typing. But in order not to crash our server we will have a 500 ms delay after each keyup before we send the request. This means one request for every 500 ms pause in typing.</p>
+                <p>We want to show "Got result" beside the input when we get a search result but not on the initila load.</p>
+                
+                <p>Try the live example on the right. Click on the button to simulate page load.</p>
+                
+                <p>We will make three functions to do this</p>
+                <ul>
+                    <li>showMessage: this one prints "Got result" and then hides it after one second</li>
+                    <li>findCars: this one sends the request and replaces the old result with the new</li>
+                    <li>search: this one is bound to the keyup event on input</li>
+                </ul>
+
+                <h5>Consider this example</h5>
+
+            </div>
+            <div class="col-sm-4">            
+                <button id="example3-start">Initialize example</button>
+                <hr>
+                <input type="text" id="example3-input" placeholder="Search"/> <span id="example3-message"></span>
+                <ul id="example3-list"></ul>
+            </div>
+        </div>
+
+<pre>
+var carOfTheDay = 'porsche';
+var list = document.getElementById('example3-list'); // element for the result
+var message = document.getElementById('example3-message'); // element for the message
+var input = document.getElementById('example3-input'); // the search input
+
+function showMessage() {
+    inline.run(function() {
+        message.textContent = 'Got result'; // show message
+    });
+    inline.sleep(1000); // wait 1 second
+    inline.run(function() { 
+        message.textContent = ''; // hide message
+    });
+}
+
+function findCars(name) {
+    var cars = inline.get('/inlinejs/cars', {search: name, limit: 5}); // send the request
+    inline.run(function() {  
+        list.innerHTML = ''; // empty current result
+    });
+    inline.foreach(cars, function(car) {
+        list.innerHTML += car.make + ' ' + car.model; // append each result
+    });
+}
+
+function search() {
+    message.textContent = ''; // hide the message
+    inline.reset(); // clear the call chain
+    inline.sleep(500); // wait 0.5 seconds to give the server a break
+    findCars(input.value); // add the methods from findCars to the call chain
+    showMessage(); // add the methods from showMessage to the call chain
+}
+
+input.onkeyup = search; // bind search to the input
+findCars(carOfTheDay); // get the initial cars on page load
+</pre>
+
+        <p>The important thing to note here about code reuseability takes place at the end of the <code>search()</code> function.</p>
+        <p>When <code>findCars()</code> and <code>showMessage()</code> are called they simply add the <code>Inline</code> methods they define to call chain at the point where they are called.</p>
+        <p>This means that you can create functions that add <code>Inline</code> methods and then call them in any combination you like to make new call chains.</p>
+
+        <hr>
+
+        <p>You may be wandering if all the <code>inline.run(function() { ... })</code> callbacks are necessary.</p>
+        <p>Likely will be using some library or functions to render data into your template. If so you can call them directly.</p>
+        
+        <h5 id="example3-show-tidy">Here is a bit tidier version</h5>
+
+        <h5 id="example3-show-jquery">And here is a version of how this might look like using jQyery.</h5>
+
+<pre id="example3-tidy"  style="display: none">
+var carOfTheDay = 'porsche';
+var list = document.getElementById('example3-list');
+var message = document.getElementById('example3-message');
+var input = document.getElementById('example3-input');
+
+function writeMessage(message) {
+    message.textContent = message;
+}
+
+function addCar(car) {
+    list.innerHTML += car.make + ' ' + car.model;
+}
+
+function clearCars() {
+    list.innerHTML = '';
+}
+
+function showMessage() {
+    inline.run(writeMessage, 'Got result');
+    inline.sleep(1000);
+    inline.run(writeMessage, '');
+}
+
+function findCars(name) {
+    var cars = inline.get('/inlinejs/cars', {search: name, limit: 5});
+    inline.run(clearCars);
+    inline.foreach(cars, addCar);
+}
+
+function search() {
+    message.textContent = '';
+    inline.reset();
+    inline.sleep(500);
+    findCars(input.value);
+    showMessage();
+}
+
+input.onkeyup = search;
+findCars(carOfTheDay);
+</pre>
+
+<pre id="example3-jquery" style="display: none">
+var carOfTheDay = 'porsche';
+
+var messageTimeout = -1; // define timeout valiable
+function showMessage() {
+    $('#example3-message').text('Got result'); // show message
+    
+    clearTimeout(messageTimeout); // clear last timeout to make sure only one is running
+    
+    messageTimeout = setTimeout(function() { //set timeout to the valiable
+        $('#example3-message').text(''); // hide message
+    });
+}
+
+function findCars(name, callback) {
+    $.getJSON('/inlinejs/cars', {search: name, limit: 5}).done(function(cars) {
+        $('#example3-list').empty(); // empty current result
+        
+        $.each(cars, function(index, car) {
+            $('#example3-list').append(car.make + ' ' + car.model); // append each result
+        });
+        
+        if (typeof callback === 'function') { // check if callback has been passed
+            callback(); // run showMessage
+        }
+    });
+}
+
+var searchTimeout = -1; // define timeout
+$('#example3-search').on('keyup', function() {
+    clearTimeout(searchTimeout); // clear last timeout to make sure only one is running
+    
+    searchTimeout = setTimeout(function() { //set timeout to the valiable
+        findCars($('example3-search').val(), showMessage); // run findCars with the extra callback
+    }, 500);
+});
+
+findCars(carOfTheDay); // get the initial cars on page load
+</pre>
+
+    <style>
+        #example3-show-tidy, #example3-show-jquery { cursor: pointer; color: #428bca;} 
+    </style>
+
+    <script>
+
+        $('#example3-show-tidy').on('click', function() {
+            $('#example3-tidy').toggle();
+        });
+
+        $('#example3-show-jquery').on('click', function() {
+            $('#example3-jquery').toggle();
+        });
+
+    </script>
+
+    <script>
+        
+        var example3Started = false;
+        $('#example3-start').on('click', function() {
+            if (example3Started)
+                return;
+            example3Started = true;
+
+            var inline = new Inline();
+
+            var carOfTheDay = 'porsche';
+            var list = document.getElementById('example3-list'); // element for the result
+            var message = document.getElementById('example3-message'); // element for the message
+
+            function showMessage() {
+                inline.run(function() {
+                    message.textContent = 'Got result'; // show message
+                });
+                inline.sleep(1000); // wait 1 second
+                inline.run(function() { 
+                    message.textContent = ''; // hide message
+                });
+            }
+
+            function findCars(name) {
+                //var cars = inline.get('/cars', {search: name, limit: 5}); // send the request
+                var cars = inline.jsonp('http://inlinejs.net/cars', {search: name, limit: 5}); // send the request
+                inline.run(function() {  
+                    list.innerHTML = ''; // empty current result
+                });
+                inline.foreach(cars, function(car) {
+                    list.innerHTML += '<li>' + car.make + ' ' + car.model + '</li>'; // append each result
+                });
+            }
+
+            var input = document.getElementById('example3-input');
+            input.onkeyup = function() {
+                message.textContent = ''; // hide the message
+                inline.reset(); // clear the callchain
+                inline.sleep(500); // wait 0.5 seconds to lessen backend load
+                findCars(input.value); // add the methods from findCars to the callchain
+                showMessage(); // add the methods from showMessage to the callchain
+            }
+
+            findCars(carOfTheDay); // get the initial cars on page load
+        });
+
+    </script>
+
+    </div>
+
+    <div class="box" id="docs-par">
+        <h4>Parallel</h4>
+
+        <p>It is handy to be able to run async functions one after another. But sometimes you want to make many ajax requests at the same time.</p>
+        <p>With <code>Inline</code> this is done with the <code>par</code> method.</p>
+        <p>You can pass the following to the <code>par</code> method:</p>
+        <ul>
+            <li>futures</li>
+            <li>array of futures</li>
+            <li>object with futures as values</li>
+        </ul>
+        <p>If we wanted to request the US presidents of 1960, 1970 and 1980 all at once we could do it like this:</p>
+
+<pre>
+var presidetns = inline.par(
+    inline.get('/president?year=1960'),
+    inline.get('/president?year=1970'),
+    inline.get('/president?year=1980')
+);
+</pre>
+
+    <p>Here <code>presidents</code> will be a future where the result is an array of futures in the order they were passed to the <code>par</code> method.</p>
+    <p>You will get get the same result if you pass an array of futures.</p>
+
+<pre>
+var presidetns = inline.par([
+    inline.get('/president?year=1960'),
+    inline.get('/president?year=1970'),
+    inline.get('/president?year=1980')
+]);
+</pre>
+
+    <p>If you pass an object you will get a future where the result is the same key/value pairs as you put in.</p>
+    <p>And lets say you wanted to pick the name form the object and send the year and name as key/value pairs back to the server. And then we wanted to render this data to our template using some function called <code>renderToTemplate</code>.</p>
+
+<pre>
+var presidetns = inline.par({
+    '1960': inline.get('/president?year=1960').key('name'),
+    '1970': inline.get('/president?year=1970').key('name'),
+    '1980': inline.get('/president?year=1980').key('name')
+});
+inline.post('/presidents-of-interest', presidents);
+inline.run(function() {
+    renderToTemplate(inline.unwrap(presidents));
+});
+</pre>
+
+    <p>Note this line in the code <code>inline.unwrap(presidents)</code>. The <code>unwrap</code> method takes future or future value and returns the data. If the data is an array it will replace all futures and future values with the data and return the array. If it is an object it will check the values and replace them. But it will not go deeper. It will not go searching for futures in a deep object</p>
+    <p><code>Inline</code> uses the <code>unwrap</code> method to handle futures. So when we put <code>presidents</code> as an argument for the <code>post</code> method <code>Inline</code> will call <code>unwrap</code> on it before sending the request.
+    <p>Calling <code>unwrap</code> with <code>presidents</code> as an argument will return this object:</p>
+
+<pre>
+{
+    '1960': 'Dwight D. Eisenhower',
+    '1970': 'Richard Nixon',
+    '1980': 'Jimmy Carter'
+}
+</pre>
+
+    <p>Because <code>Inline</code> always uses <code>unwrap</code> we can write the <code>run</code> method like this:</p>
+    <pre>inline.run(renderToTemplate, presidents);</pre>
+
+    <hr>
+    <p>It is inportant to know that all the <code>par</code> method does is to remove the futures you pass to it from the callchain and run them instead in parallel where <code>par</code> is called in the chain.</p>
+    <p>This means you can build a chain and then decide on the fly to run some methods in parallell, or not.</p>
+
+    <h5>Consider this</h5>
+
+<pre>
+var presidents = {};
+presidents[1960'] = inline.get('/president?year=1960').key('name');
+
+if (someCondition)
+    presidents['1970'] = inline.get('/president?year=1970').key('name');
+
+if (anotherCondition)
+    presidents['1980'] = {'data.name': inline.get('/president?year=1980')};
+
+if (runParallelCondition)
+    inline.par(presidents);
+
+inline.run(renderToTemplate, presidents);
+</pre>
+
+    <p>Here we build an object of futures we want to execute depending on some codndition or another. Note that for the year 1980 we pass a <samp>future value</samp> instead of using the <code>key</code> method. This is posible because futures and future values are interchangeable. The result will be the same.</p>
+    <p>If <code>runParallelCondition</code> is <code>true</code> the <code>par</code> method will remove the <code>get</code> methods from the call chain leaving only <code>par</code> and <code>run</code>. Else the the call chain will will contain one or more <code>get</code> methods and <code>run</code>.</p>
+    <p>Note that we don't have to use the future that <code>par</code> returns. We already have the futures. We just use <code>par</code> to reorganize the call chain.</p>
+    <p>When you use <code>par</code> method you have to be careful not to use data from an action that is run in the same <code>par</code> method because it might not have resolved.</p>
+
+    </div>
+
+    <div class="box" id="docs-func">
+        <h4>Functionality</h4>
+        <p>All <code>Inline</code> methods that add action to the call chain return a furure. This means that you can use <code>return</code> in the <code>if</code>, <code>ifnot</code> and <code>run</code> methods.</p>
+
+<pre>
+var president = inline.get('/president?year=1990');
+var isTwoTerm = inline.run(function() {
+    return president.data.end - president.data.start > 4;
+});
+</pre>
+        
+        <hr>
+
+        <p>If we vant to run some code only if you have a single term president we can consider these two options.</p>
+
+<pre>
+var president = inline.get('/president?year=1990');
+var isTwoTerm = inline.run(function() {
+    if (president.data.end - president.data.start > 4)
+        return;
+    // run the code for a single term president ...
+});
+</pre>
+
+<pre>
+var president = inline.get('/president?year=1990');
+var isTwoTerm = inline.run(function() {
+    if (president.data.end - president.data.start > 4)
+        inline.skip();
+    // run the code for a single term president ...
+});
+</pre>
+
+        <p>Here <code>inline.skip()</code> throws an error and termintes the execution of the funcion. But <code>Inline</code> catches the error and finds it is a <code>skip</code> error and proceeds to the next action in the call chain.</p>
+        <p><code>Inline</code> catces all errors that are thrown by code that <code>Inline</code> manages. This means we can thro errors in our code and use the futures to handle the errors.</p>
+        <p>Hers for example we will ask for 5 Fords an the try to get the model of the 10th which does not exist.</p>
+
+<pre>
+var fords = inline.get('/inlinejs/cars', {search: 'ford', limit: 5});
+var model = inline.run(function() {
+    return fords.data[9].model;
+});
+inline.ifnot(model, function() {
+    console.log('you need to ask for more fords');
+});
+</pre>
+
+        <hr>
+        <p>If you want to stop the call chain you call <code>inline.stop()</code>.</p>
+        <p><code>inline.stop()</code> will throw an error and stop the execution where it is called and then reset the call chain.</p>
+
+<pre>
+var fords = inline.get('/inlinejs/cars', {search: 'ford', limit: 5});
+inline.if({'data.lenght < 10'}, function() {
+    inline.stop();
+});
+</pre>
+
+        <p>You can pause and resume the call chain.</p>
+        <p><code>inline.pause()</code> will not throw an error so if it is called for example in a <code>run</code> action, that action will finish and then the call chain will pause.</p>
+
+<pre>
+var president = inline.get('/president?year=1990');
+inline.pause();
+inline.run(function() {
+    console.log(president.data.name); 
+});
+document.getElementById('log-button').onclick = function() {
+    inline.resume();
+}
+</pre>
+
+        <hr>
+        <p>You can call <code>inline.future()</code> to get an empty future. If for example we want to get the presidents of today and a hundred years ago. We want to use the <code>par</code> and <code>unwrap</code> methods like we did before. But we know who the current president is, we could do it like this:</p>
+
+<pre>
+var presidetns = inline.par({
+    '1915': inline.get('/president?year=1915').key('name'),
+    '2015': inline.future().resolve('Barak Obama')
+});
+inline.run(renderToTemplate, presidents);
+</pre>
+
+    </div>
+
+    <div class="box" id="docs-config">
+        <h4>Config</h4>
+        <p>When you create an <code>Inline</code> instance you can pass an object with config parameters. There are two parameters you can pass.</p>
+        <h5>autoStart</h5>
+        <p>By default <code>autoStart</code> is set to <code>true</code>.</p>
+        <p>If you set it to <code>false</code> you will have to call <code>inline.start()</code> to start the call chain.</p>
+<pre>
+var inline = new Inline({autoStart: false});
+var president = inline.get('/president?year=2000');
+inline.start();
+</pre>
+        <hr>
+        <h5>debug</h5>
+        <p>By default <code>debug</code> is set to <code>false</code>. In debug mode errors that occur when running the call chain will stop the execution and <code>error.stack</code> will be printed out in the console.</p>
+        <p>Also <code>Inline</code> will not reset when execution finishes. This means that the <code>inline</code> object will still contain the actions and futures to allow for inspection while you are developing.</p>
+        <p>If you are using multiple instances of <code>Inline</code> it may be better to enable debug in the prototype.</p>
+        <pre>Inline.prototype.config.debug = true;</pre>
+    </div>
+
+    <div class="box" id="docs-concl">
+        <h4>Conclution</h4>
+        
+        <p>After reading this tutorial you may still think <code>Inline</code> is complicated and there is a lot to learn and remember. But it's not. There are just two concepts you need to understand to be able to use <code>Inline</code>.<p>
+        
+        <ul>
+            <li>You need to understand the concept of futures. That you are working with data that is not yet available. You need to know how to use the future object to work with promised data and handle errors.</li>
+            <li>You need to understand that you are working with a call chain and you have to keep track of where your actions are in the chain.</li>
+        </ul>
+
+        <p>Then you just look up the available methods and what arguments they take in the index.</p>
+
+    </div>
+
+</div>
+
+</body>
+</html>

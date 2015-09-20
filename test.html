@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>Test</title>
+    
+    <script src="js/jquery-2.1.3.min.js"></script>
+    <script src="js/inline-0.9.3.js"></script>
+    <script src="js/inline-extra-0.9.0.js"></script>
+    
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.css"/>
+
+</head>
+
+<body ng-app="app">
+
+<style>
+.box {
+    border: 1px solid #ccc;
+    padding: 20px;
+    margin: 20px;
+}
+.headline {
+    margin-left: 20px;
+}
+</style>
+
+<div class="box">
+    <h3>Make two requests in sequesnce and sum result</h3>
+
+    <div>Result: <span id="simple-result"></span></div>
+    <hr>
+    <button id="simple-run">Run</button>
+</div>
+
+<pre>
+    // jsonp result example for /count = {"count": 42}
+
+    var r1 = inline.jsonp('http://hvirfill.reykjavik.is/count?postal=105');
+    var r2 = inline.jsonp('http://hvirfill.reykjavik.is/count?postal=107');
+
+    inline.run(function() {
+        var sum = r1.data.count + r2.data.count;
+        $('#simple-result').text(sum);
+    });
+</pre>
+
+<script>
+    Inline.prototype.config.debug = true;
+    var inline = new Inline();
+</script>
+
+<script>
+
+    $('#simple-run').on('click', function() {
+        var r1 = inline.jsonp('http://hvirfill.reykjavik.is/count?postal=105');
+        var r2 = inline.jsonp('http://hvirfill.reykjavik.is/count?postal=107');
+
+        inline.run(function() {
+            var sum = r1.data.count + r2.data.count;
+            $('#simple-result').text(sum);
+        });
+    });
+
+</script>
+
+<div class="box">
+    <h3>Conditional request</h3>
+
+    <div>Result: <span id="cond-result"></span></div>
+    <hr>
+    <button id="cond-run">Run</button>
+</div>
+
+<pre>
+    // jsonp result example for /count = {"count": 42}
+
+    var r1, r2;
+    
+    r1 = inline.jsonp('http://hvirfill.reykjavik.is/count?postal=105');
+
+    inline.run(function() {
+        if (r1.data.count < 1000)
+            r2 = inline.jsonp('http://hvirfill.reykjavik.is/count?postal=101');
+        else
+            r2 = inline.jsonp('http://hvirfill.reykjavik.is/count?postal=107');
+    });
+
+    inline.run(function() {
+        var sum = r1.data.count + r2.data.count;
+        $('#cond-result').text(sum);
+    });
+</pre>
+
+<script>
+
+    $('#cond-run').on('click', function() {
+        var r1, r2;
+        
+        r1 = inline.jsonp('http://hvirfill.reykjavik.is/count?postal=105');
+
+        inline.run(function() {
+            if (r1.data.count < 1000)
+                r2 = inline.jsonp('http://hvirfill.reykjavik.is/count?postal=101');
+            else
+                r2 = inline.jsonp('http://hvirfill.reykjavik.is/count?postal=107');
+        });
+
+        inline.run(function() {
+            var sum = r1.data.count + r2.data.count;
+            $('#cond-result').text(sum);
+        });
+    });
+
+</script>
+
+<div class="box">
+    <h3>Fallback, Check and Filter</h3>
+
+    <div>Fallback, check: <span id="fallback-result1"></span></div>
+    <div>Result: <span id="fallback-result2"></span></div>
+    <hr>
+    <button id="fallback-run">Run</button>
+</div>
+
+<pre>
+    // jsonp result example for /count = {"count": 42}
+
+    var fallback = {count: 10};
+
+    var check = function(data) {
+        return data.count > 0;
+    }
+
+    var modify = function(data) {
+        data.count *= 100;
+        return data;
+    }
+
+    // returns {"count": 0}
+    var url1 = 'http://hvirfill.reykjavik.is/count?postal=125';
+    var r1 = inline.jsonp(url1).fallback(fallback).check(check);
+    
+    var r2 = inline.jsonp('http://hvirfill.reykjavik.is/count?postal=107').modify(modify);
+
+    inline.run(function() {
+        $('#fallback-result1').text(r1.data.count);
+        $('#fallback-result2').text(r2.data.count);
+    });
+</pre>
+
+<script>
+
+    $('#fallback-run').on('click', function() {
+        var fallback = {count: 10};
+
+        var check = function(data) {
+            return data.count > 0;
+        }
+
+        var modify = function(data) {
+            data.count *= 100;
+            return data;
+        }
+
+        // returns {"count": 0}
+        var url1 = 'http://hvirfill.reykjavik.is/count?postal=125';
+        var r1 = inline.jsonp(url1).fallback(fallback).check(check);
+        
+        var r2 = inline.jsonp('http://hvirfill.reykjavik.is/count?postal=107').modify(modify);
+
+        inline.run(function() {
+            $('#fallback-result1').text(r1.data.count);
+            $('#fallback-result2').text(r2.data.count);
+        });
+    });
+
+</script>
+
+<div class="box">
+    <h3>Pause and sleep example</h3>
+
+    <div>Message: <span id="pause-message"></span></div>
+    <div>Count 1: <span id="pause-count1"></span></div>
+    <div>Count 2: <span id="pause-count2"></span></div>
+    <div>Sum: <span id="pause-result"></span></div>
+    <hr>
+    <button id="pause-run">Run</button>
+    <button id="pause-resume">Resume</button>
+</div>
+
+<pre>
+    // jsonp result example for /count = {"count": 42}
+
+    var r1 = inline.jsonp('http://hvirfill.reykjavik.is/count?postal=105');
+        
+    inline.run(function() {
+        $('#pause-count1').text(r1.data.count);
+        $('#pause-message').text('Paused');
+    });
+
+    inline.pause();
+
+    inline.run(function() {
+        $('#pause-message').text('Resumed');
+    });
+
+    var r2 = inline.jsonp('http://hvirfill.reykjavik.is/count?postal=107');
+
+    inline.run(function() {
+        $('#pause-count2').text(r2.data.count);
+        var sum = r1.data.count + r2.data.count;
+        $('#pause-result').text(sum);
+    });
+
+    inline.sleep(1000);
+
+    $('#pause-resume').on('click', function() {
+        inline.resume();
+    });
+</pre>
+
+<script>
+
+    $('#pause-run').on('click', function() {
+        
+        var inline = new Inline();
+
+        var r1 = inline.jsonp('http://hvirfill.reykjavik.is/count?postal=105');
+        
+        inline.run(function() {
+            $('#pause-count1').text(r1.data.count);
+            $('#pause-message').text('Paused');
+        });
+
+        inline.pause();
+
+        inline.run(function() {
+            $('#pause-message').text('Resumed');
+        });
+
+        var r2 = inline.jsonp('http://hvirfill.reykjavik.is/count?postal=107');
+
+        inline.run(function() {
+            $('#pause-count2').text(r2.data.count);
+            var sum = r1.data.count + r2.data.count;
+            $('#pause-result').text(sum);
+        });
+
+        inline.sleep(1000);
+
+        $('#pause-resume').on('click', function() {
+            inline.resume();
+        });
+    });
+
+    
+
+</script>
+
+<div class="box">
+    <h3>Parameter formating</h3>
+
+    <div>Count 1: <span id="parameter-result1"></span></div>
+    <div>Count 2: <span id="parameter-result2"></span></div>
+    <div>Count 3: <span id="parameter-result3"></span></div>
+    <hr>
+    <button id="parameter-run">Run</button>
+</div>
+
+<pre>
+    // jsonp result example for /count = {"count": 42}
+
+    var r1 = inline.jsonp('http://hvirfill.reykjavik.is/find?postal=107');
+    var r2 = inline.jsonp('http://hvirfill.reykjavik.is/count', {street: {'data[0].street': r1}});
+    var r3 = inline.jsonp('http://hvirfill.reykjavik.is/count', {tags: {'data[0].language.is.tags[0]': r1}});
+
+    inline.run(function(first, second, third) {
+        $('#parameter-result1').text(first.length);
+        $('#parameter-result2').text(second.count);
+        $('#parameter-result3').text(third.count);
+    }, r1, r2, r3);
+</pre>
+
+<script>
+
+    $('#parameter-run').on('click', function() {
+        var r1 = inline.jsonp('http://hvirfill.reykjavik.is/find?postal=107');
+        var r2 = inline.jsonp('http://hvirfill.reykjavik.is/count', {street: {'data[0].street': r1}});
+        var r3 = inline.jsonp('http://hvirfill.reykjavik.is/count', {tags: {'data[0].language.is.tags[0]': r1}});
+
+        inline.run(function(first, second, third) {
+            $('#parameter-result1').text(first.length);
+            $('#parameter-result2').text(second.count);
+            $('#parameter-result3').text(third.count);
+        }, r1, r2, r3);
+    });
+
+</script>
+
+<div class="box">
+    <h3>Skip example</h3>
+
+    <div>Count 1: <span id="skip-result"></span></div>
+    <div>Count 1: <span id="skip-message"></span></div>
+    <hr>
+    <button id="skip-run">Run</button>
+</div>
+
+<pre>
+    var r1 = inline.jsonp('http://hvirfill.reykjavik.is/find?postal=107');
+
+    inline.run(function() {
+        $('#skip-result').text(r1.data.length);
+        inline.skip();
+        alert('Annoying alert');
+    });
+
+    inline.run(function() {
+        $('#skip-message').text('Better message');
+    });
+</pre>
+
+<script>
+
+    $('#skip-run').on('click', function() {
+        
+        var r1 = inline.jsonp('http://hvirfill.reykjavik.is/find?postal=107');
+
+        inline.run(function() {
+            $('#skip-result').text(r1.data.length);
+            inline.skip();
+            alert('Annoying alert');
+        });
+
+        inline.run(function() {
+            $('#skip-message').text('Better message');
+        });
+    });
+
+</script>
+
+<div class="box">
+    <h3>if and ifnot</h3>
+
+    <div>Message 1: <span id="if-result1"></span></div>
+    <div>Message 2: <span id="if-result2"></span></div>
+    <hr>
+    <button id="if-run">Run</button>
+</div>
+
+<pre>
+    // jsonp result example = {"count": 42}
+
+    var r1 = inline.jsonp('http://hvirfill.reykjavik.is/count?postal=107');
+
+    var r2 = inline.if({'data.count < 100': r1}, function() {
+        $('#if-result1').text('Less than 100');
+    });
+
+    var r3 = inline.ifnot({'isError': r1}, function() {
+        $('#if-result2').text('No error');
+    });
+</pre>
+
+<script>
+
+    $('#if-run').on('click', function() {
+        
+        var r1 = inline.jsonp('http://hvirfill.reykjavik.is/count?postal=107');
+
+        var r2 = inline.if({'data.count < 100': r1}, function() {
+            $('#if-result1').text('Less than 100');
+        });
+
+        var r3 = inline.ifnot({'isError': r1}, function() {
+            $('#if-result2').text('No error');
+        });
+    });
+
+</script>
+
+<div class="box">
+    <h3>Iteration</h3>
+
+    <div>Tag vistitreykjavik.is: <span id="iter-result1"></span></div>
+    <div>Single date: <span id="iter-result2"></span></div>
+    <div>Address 1: <span id="iter-result3"></span></div>
+    <hr>
+    <button id="iter-run">Run</button>
+</div>
+
+<pre>
+    var r1 = inline.jsonp('http://hvirfill.reykjavik.is/find?lang=is');
+
+    var vrc = 0;
+    inline.foreach({'data': r1}, function(item) {
+        if (item.language.is.tags.indexOf('visitreykjavik.is') !== -1) {
+            vrc += 1;
+        }
+    });
+
+    var r2 = inline.filter({'data': r1}, 'item.occurrence === "single"')
+
+    var r3 = inline.map({'data': r1}, function(val) {
+        return [val.street, val.postal, val.city].join(' ');
+    });
+
+    inline.run(function() {
+        $('#iter-result1').text(vrc);
+        $('#iter-result2').text(r2.data.length);
+        $('#iter-result3').text(r3.data[0]);
+    });
+</pre>
+
+<script>
+
+    $('#iter-run').on('click', function() {
+        
+        var r1 = inline.jsonp('http://hvirfill.reykjavik.is/find?lang=is');
+
+        var vrc = 0;
+        inline.foreach({'data': r1}, function(item) {
+            if (item.language.is.tags.indexOf('visitreykjavik.is') !== -1) {
+                vrc += 1;
+            }
+        });
+
+        var r2 = inline.filter({'data': r1}, 'item.occurrence === "single"')
+
+        var r3 = inline.map({'data': r1}, function(val) {
+            return [val.street, val.postal, val.city].join(' ');
+        });
+
+        inline.run(function() {
+            $('#iter-result1').text(vrc);
+            $('#iter-result2').text(r2.data.length);
+            $('#iter-result3').text(r3.data[0]);
+        });
+    });
+
+</script>
+
+<div class="box">
+    <h3>Future iteration</h3>
+
+    <div>Tag vistitreykjavik.is: <span id="fiter-result1"></span></div>
+    <div>Single date: <span id="fiter-result2"></span></div>
+    <div>Address 1: <span id="fiter-result3"></span></div>
+    <hr>
+    <button id="fiter-run">Run</button>
+</div>
+
+<pre>
+    var vrc = 0;
+    var r1 = inline.jsonp('http://hvirfill.reykjavik.is/find?lang=is');
+    r1.foreach(function(item) {
+        if (item.language.is.tags.indexOf('visitreykjavik.is') !== -1) {
+            vrc += 1;
+        }
+    });
+    inline.run(function() {
+        $('#fiter-result1').text(vrc);
+    });
+
+    var r2 = inline.jsonp('http://hvirfill.reykjavik.is/find?lang=is');
+    r2.filter('item.occurrence === "single"');
+    r2.apply(function(data) {
+        $('#fiter-result2').text(data.length);
+    });
+
+    var r3 = inline.jsonp('http://hvirfill.reykjavik.is/find?lang=is');
+    r3.map(function(item) {
+        return [item.street, item.postal, item.city].join(' ');
+    });
+    r3.apply(function(data) {
+        $('#fiter-result3').text(data[0]);
+    });
+</pre>
+
+<script>
+
+    $('#fiter-run').on('click', function() {
+        
+        var vrc = 0;
+        var r1 = inline.jsonp('http://hvirfill.reykjavik.is/find?lang=is');
+        r1.foreach(function(item) {
+            if (item.language.is.tags.indexOf('visitreykjavik.is') !== -1) {
+                vrc += 1;
+            }
+        });
+        inline.run(function() {
+            $('#fiter-result1').text(vrc);
+        });
+
+        var r2 = inline.jsonp('http://hvirfill.reykjavik.is/find?lang=is');
+        r2.filter('item.occurrence === "single"');
+        r2.apply(function(data) {
+            $('#fiter-result2').text(data.length);
+        });
+
+        var r3 = inline.jsonp('http://hvirfill.reykjavik.is/find?lang=is');
+        r3.map(function(item) {
+            return [item.street, item.postal, item.city].join(' ');
+        });
+        r3.apply(function(data) {
+            $('#fiter-result3').text(data[0]);
+        });
+    });
+
+</script>
+
+<div class="box">
+    <h3>Parallel</h3>
+
+    <div>Result 1: <span id="par-result1"></span></div>
+    <div>Result 2: <span id="par-result2"></span></div>
+    <hr>
+    <button id="par-run">Run</button>
+</div>
+
+<pre>
+    // jsonp result example = {"count": 42}
+
+    var r1 = inline.par(
+        inline.jsonp('http://hvirfill.reykjavik.is/count?postal=105'),
+        inline.jsonp('http://hvirfill.reykjavik.is/count?postal=107')
+    );
+    
+    var r2 = inline.par({
+        p1: inline.jsonp('http://hvirfill.reykjavik.is/count?postal=105'),
+        p2: inline.jsonp('http://hvirfill.reykjavik.is/count?postal=107')
+    });
+
+    inline.run(function(first, second) {
+        $('#par-result1').text(first[0].count + first[1].count);
+        $('#par-result2').text(second.p1.count + second.p2.count);
+    }, r1, r2);
+</pre>
+
+<script>
+
+    $('#par-run').on('click', function() {
+        
+        var r1 = inline.par(
+            inline.jsonp('http://hvirfill.reykjavik.is/count?postal=105'),
+            inline.jsonp('http://hvirfill.reykjavik.is/count?postal=107')
+        );
+        
+        var r2 = inline.par({
+            p1: inline.jsonp('http://hvirfill.reykjavik.is/count?postal=105'),
+            p2: inline.jsonp('http://hvirfill.reykjavik.is/count?postal=107')
+        });
+
+        inline.run(function(first, second) {
+            $('#par-result1').text(first[0].count + first[1].count);
+            $('#par-result2').text(second.p1.count + second.p2.count);
+        }, r1, r2);
+    });
+
+</script>
+
+<style>
+    #thumb-box {
+        width: 40px;
+        height: 30px;
+    }
+    #thumb-box img {
+        width: 100%;
+    }
+</style>
+
+<div class="box">
+    <h3>Image</h3>
+
+    <button id="element-run">Run</button>
+
+    <div id="thumb-box"></div>
+
+</div>
+
+<pre>
+    var future = inline.src('http://hvirfill.reykjavik.is/images/img_459142729741814_large.jpg');
+    inline.run(function() {
+        document.getElementById('thumb-box').appendChild(future.data);
+    }):
+</pre>
+
+<script>
+
+    $('#element-run').on('click', function() {
+        
+        var future = inline.img('http://hvirfill.reykjavik.is/images/img_459142729741814_large.jpg');
+        inline.run(function() {
+            document.getElementById('thumb-box').appendChild(future.data);
+        });
+    });
+
+</script>
+
+<div class="box">
+    <h3>Future</h3>
+
+    <div>In 105 and 107: <span id="future-result1"></span></div>
+    <div>In 105: <span id="future-result2"></span></div>
+    <div>Title of first in 105: <span id="future-result3"></span></div>
+    <hr>
+    <button id="future-run">Run</button>
+</div>
+
+<pre>
+    var future = inline.jsonp('http://hvirfill.reykjavik.is/find?postal=105,107');
+    future.apply(function(data) {
+        $('#future-result1').text(data.length);
+    });
+    future.filter('item.postal === "105"');
+    future.apply(function(data) {
+        $('#future-result2').text(data.length);
+    });
+    future.modify('data[0].language.is.title');
+    future.apply(function(data) {
+        $('#future-result3').text(data);
+    });
+</pre>
+
+<script>
+
+    $('#future-run').on('click', function() {
+        
+        var future = inline.jsonp('http://hvirfill.reykjavik.is/find?postal=105,107');
+        future.apply(function(data) {
+            $('#future-result1').text(data.length);
+        });
+        future.filter('item.postal === "105"');
+        future.apply(function(data) {
+            $('#future-result2').text(data.length);
+        });
+        future.modify('data[0].language.is.title');
+        future.apply(function(data) {
+            $('#future-result3').text(data);
+        });
+    });
+
+</script>
+
+</body>
+</html>
